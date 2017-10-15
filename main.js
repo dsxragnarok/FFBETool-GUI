@@ -30,6 +30,10 @@ function createWindow () {
     // when you should delete the corresponding element.
     win = null
   })
+
+  // Installing React DevTools
+  // Need to figure out a better way to do this.
+  BrowserWindow.addDevToolsExtension('/Users/kevin.phung/Library/Application Support/Google/Chrome/Default/Extensions/fmkadmapgofadopljbjfkapdkoienihi/2.5.2_0');
 }
 
 // This method will be called when Electron has finished
