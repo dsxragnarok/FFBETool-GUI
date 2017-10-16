@@ -1,31 +1,57 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { Route, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import { Tabs, Tab } from 'material-ui/Tabs';
 
 import SinglePage from './pages/SinglePage';
 import BatchPage from './pages/BatchPage';
 
-import logo from './logo.svg';
 import './App.css';
 
-class App extends Component {
+export default class App extends Component {
+  static propTypes = {
+    history: PropTypes.shape({ push: PropTypes.func.isRequired })
+  }
+  static defaultProps = {
+    history: {
+      push: () => null
+    }
+  }
+  state = {
+    tab: '/'
+  }
+
+  constructor (props) {
+    super(props);
+
+    this.handleTabChange = this.handleTabChange.bind(this);
+  }
+
+  handleTabChange (value) {
+    this.setState({ tab: value });
+    this.props.history.push(value);
+  }
+
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-          <button onClick={() => this.props.history.push('/') }>Single</button>
-          <button onClick={() => this.props.history.push('/batch') }>Batch</button>
-        </header>
-        <Route exact path="/" component={ SinglePage } />
-        <Route path="/batch" component={ BatchPage } />
-      </div>
+      <MuiThemeProvider>
+        <div className="App">
+          <Tabs
+            value={ this.state.tab }
+            onChange={ this.handleTabChange }
+          >
+            <Tab label="Single" value="/" />
+            <Tab label="Batch" value="/batch" />
+          </Tabs>
+          <Route exact path="/" component={ SinglePage } />
+          <Route path="/batch" component={ BatchPage } />
+        </div>
+      </MuiThemeProvider>
     );
   }
 }
-
-export default App;
 
 function mapStateToProps ({ router }) {
   return { router };
