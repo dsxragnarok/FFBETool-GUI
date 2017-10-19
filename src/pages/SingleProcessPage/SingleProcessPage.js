@@ -13,8 +13,8 @@ const dropZoneBtnStyles = {
   margin: 10
 };
 
-export default class SinglePage extends Component {
-  static displayName = 'SinglePage'
+export default class SingleProcessPage extends Component {
+  static displayName = 'SingleProcessPage'
   static defaultProps = {}
   static propTypes = {}
 

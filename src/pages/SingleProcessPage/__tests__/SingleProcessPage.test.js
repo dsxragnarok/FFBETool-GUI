@@ -1,12 +1,12 @@
 import Dropzone from 'react-dropzone';
 import RaisedButton from 'material-ui/RaisedButton';
 
-import SinglePage from '../SinglePage';
+import SingleProcessPage from '../SingleProcessPage';
 import { renderComponent } from '../../../testUtils/reactHelpers';
 
-const renderPage = (props) => renderComponent(SinglePage, props);
+const renderPage = (props) => renderComponent(SingleProcessPage, props);
 
-describe('SinglePage component', () => {
+describe('SingleProcessPage component', () => {
   it('renders', () => {
     expect(renderPage()).toBePresent();
   });

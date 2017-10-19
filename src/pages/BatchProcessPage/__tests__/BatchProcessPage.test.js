@@ -1,10 +1,10 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import BatchPage from '../BatchPage';
+import BatchProcessPage from '../BatchProcessPage';
 
 describe('SinglePage component', () => {
   it('renders', () => {
-    const component = shallow(<BatchPage />);
+    const component = shallow(<BatchProcessPage />);
     expect(component).toBePresent();
   });
 });

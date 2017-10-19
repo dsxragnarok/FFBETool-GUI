@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
-export default class BatchPage extends Component {
-  static displayName = 'BatchPage'
+export default class BatchProcessPage extends Component {
+  static displayName = 'BatchProcessPage'
   static defaultProps = {}
   static propTypes = {}
 
