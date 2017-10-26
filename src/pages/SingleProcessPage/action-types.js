@@ -15,3 +15,6 @@ export const REMOVE_CGS_FILE = '@SingleProcess/REMOVE_CGS_FILE';
 
 export const BATCH_ADD_CGS_FILES = '@SingleProcess/BATCH_ADD_CGS_FILES';
 export const CLEAR_CGS_FILES = '@SingleProcess/CLEAR_CGS_FILES';
+
+export const REMOVE_ERROR = '@SingleProcess/REMOVE_ERROR';
+export const CLEAR_ERRORS = '@SingleProcess/CLEAR_ERRORS';
