@@ -38,7 +38,7 @@ export default class SingleProcessPage extends Component {
   render () {
     return (
       <div style={ { display: 'flex', flexDirection: 'row' } }>
-        <div style={ { display: 'flex', flex: '1 0 auto', flexDirection: 'column', width: '50%', padding: 10 } }>
+        <div style={ { display: 'flex', flex: '1 0 auto', flexDirection: 'column', padding: 10 } }>
           <Dropzone
             name="select-anime"
             accept="image/png"
@@ -67,10 +67,12 @@ export default class SingleProcessPage extends Component {
             <RaisedButton label="SELECT CGS" style={ dropZoneBtnStyles } />
           </Dropzone>
         </div>
-        <div style={{ display: 'flex', flex: '1 0 auto', outline: '2px solid #ccc' }}>
+        <div style={{ display: 'flex', flex: '3 0 auto', outline: '2px solid #ccc', margin: 10 }}>
+          <div style={{ width: 700, height: 400, margin: 'auto', overflow: 'auto' }}>
           { this.state.anime &&
             <img src={ this.state.anime.preview } alt="Anime Preview" style={{ width: this.state.anime.width, height: this.state.anime.height }} />
           }
+          </div>
         </div>
       </div>
     );
