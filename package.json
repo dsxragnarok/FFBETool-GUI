@@ -27,12 +27,12 @@
   },
   "devDependencies": {
     "concurrently": "^3.5.0",
-    "electron": "1.7.9",
+    "electron": "^1.8.7",
     "enzyme": "^3.1.0",
     "enzyme-adapter-react-16": "^1.0.1",
     "jest-enzyme": "^4.0.1",
     "react-router-redux": "^5.0.0-alpha.6",
     "react-test-renderer": "^16.0.0",
-    "wait-on": "^2.0.2"
+    "wait-on": "^2.1.0"
   }
 }
