@@ -34,5 +34,8 @@
     "react-router-redux": "^5.0.0-alpha.6",
     "react-test-renderer": "^16.0.0",
     "wait-on": "^2.1.0"
+  },
+  "peerDependencies": {
+    "hoek": "^4.2.1"
   }
 }
