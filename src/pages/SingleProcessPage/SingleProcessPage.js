@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Dropzone from 'react-dropzone';
 import RaisedButton from 'material-ui/RaisedButton';
+import Image from '../../components/Image';
 
 const dropZoneStyles = {
   width: '100%',
@@ -24,15 +25,7 @@ export default class SingleProcessPage extends Component {
 
   setAnimeFile ([file], event) {
     console.log('setAnimeFile', file);
-
-    const img = new Image();
-    img.src = file.preview;
-    img.onload = () => {
-      const width = img.naturalWidth;
-      const height = img.naturalHeight;
-
-      this.setState({ anime: { ...file, width, height } });
-    }
+    this.setState({ anime: { ...file } });
   }
 
   render () {
@@ -68,10 +61,8 @@ export default class SingleProcessPage extends Component {
           </Dropzone>
         </div>
         <div style={{ display: 'flex', flex: '3 0 auto', outline: '2px solid #ccc', margin: 10 }}>
-          <div style={{ width: 700, height: 400, margin: 'auto', overflow: 'auto' }}>
-          { this.state.anime &&
-            <img src={ this.state.anime.preview } alt="Anime Preview" style={{ width: this.state.anime.width, height: this.state.anime.height }} />
-          }
+          <div style={{ width: 800, height: 400, margin: 'auto', overflow: 'auto' }}>
+          { this.state.anime && <Image source={ this.state.anime.preview } /> }
           </div>
         </div>
       </div>
