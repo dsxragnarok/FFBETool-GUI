@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Dropzone from 'react-dropzone';
 import RaisedButton from 'material-ui/RaisedButton';
+import uniq from 'lodash/uniq';
 import Image from '../../components/Image';
 
 const dropZoneStyles = {
@@ -33,7 +34,7 @@ export default class SingleProcessPage extends Component {
     error: [],
   }
 
-  setAnimeFile ([file], event) {
+  setAnimeFile ([file]) {
     console.log('setAnimeFile', file);
     const { name, path: animePath } = file;
     const id = parseInt(getIdFromFileName(name), 10);
@@ -42,6 +43,29 @@ export default class SingleProcessPage extends Component {
       id,
       animePath,
       anime: { ...file },
+    });
+  }
+
+  setCggFile ([file]) {
+    console.log('setCggFile', file);
+    const { path: cggPath } = file;
+
+    this.setState({ cggPath });
+  }
+
+  addCgsFiles (files) {
+    console.log('setCgsFile', files);
+    const paths = [
+      ...this.state.cgsPaths,
+      ...files.map(({ path }) => path)
+    ];
+
+    this.setState({ cgsPaths: uniq(paths) })
+  }
+
+  appendError (message) {
+    this.setState({
+      error: [...this.state.error, message]
     });
   }
 
@@ -55,6 +79,9 @@ export default class SingleProcessPage extends Component {
             multiple={ false }
             style={ dropZoneStyles }
             onDropAccepted={ this.setAnimeFile.bind(this) }
+            onDropRejected={ () =>
+              this.appendError('Error: Incorrect file. Expected PNG file.')
+            }
           >
             <p>Drag & Drop the anime file here</p>
             <RaisedButton label="SELECT ANIME" style={ dropZoneBtnStyles } />
@@ -64,6 +91,10 @@ export default class SingleProcessPage extends Component {
             accept="text/csv"
             multiple={ false }
             style={ dropZoneStyles }
+            onDropAccepted={ this.setCggFile.bind(this) }
+            onDropRejected={ () =>
+              this.appendError('Error: Incorrect file. Expected a CSV file.')
+            }
           >
             <p>Drag & Drop the cgg file here</p>
             <RaisedButton label="SELECT CGG" style={ dropZoneBtnStyles } />
@@ -72,6 +103,10 @@ export default class SingleProcessPage extends Component {
             name="select-cgs"
             accept="text/csv"
             style={ dropZoneStyles }
+            onDropAccepted={ this.addCgsFiles.bind(this) }
+            onDropRejected={ () =>
+              this.appendError('Error: Incorrect file. Expected a CSV file.')
+            }
           >
             <p>Drag & Drop the cgs files here</p>
             <RaisedButton label="SELECT CGS" style={ dropZoneBtnStyles } />
