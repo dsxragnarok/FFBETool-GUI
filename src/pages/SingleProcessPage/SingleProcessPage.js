@@ -14,18 +14,35 @@ const dropZoneBtnStyles = {
   margin: 10
 };
 
+function getIdFromFileName (filename) {
+  return filename.split('_').slice(-1);
+}
+
 export default class SingleProcessPage extends Component {
   static displayName = 'SingleProcessPage'
   static defaultProps = {}
   static propTypes = {}
 
   state = {
-    anime: null
+    anime: null,
+    id: 0,
+    animePath: '',
+    cggPath: '',
+    cgsPaths: [],
+    loading: false,
+    error: [],
   }
 
   setAnimeFile ([file], event) {
     console.log('setAnimeFile', file);
-    this.setState({ anime: { ...file } });
+    const { name, path: animePath } = file;
+    const id = parseInt(getIdFromFileName(name), 10);
+
+    this.setState({
+      id,
+      animePath,
+      anime: { ...file },
+    });
   }
 
   render () {
