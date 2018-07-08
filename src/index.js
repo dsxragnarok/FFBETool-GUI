@@ -10,6 +10,7 @@ import { ConnectedRouter, routerReducer, routerMiddleware } from 'react-router-r
 
 import reducers from './reducers';
 
+import './normalize.css';
 import './index.css';
 import { AppWithRouter } from './App';
 import registerServiceWorker from './registerServiceWorker';

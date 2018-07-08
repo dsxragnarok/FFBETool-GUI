@@ -5,8 +5,8 @@ import { connect } from 'react-redux';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import { Tabs, Tab } from 'material-ui/Tabs';
 
-import SinglePage from './pages/SinglePage';
-import BatchPage from './pages/BatchPage';
+import SingleProcessPage from './pages/SingleProcessPage';
+import BatchProcessPage from './pages/BatchProcessPage';
 
 import './App.css';
 
@@ -45,8 +45,8 @@ export default class App extends Component {
             <Tab label="Single" value="/" />
             <Tab label="Batch" value="/batch" />
           </Tabs>
-          <Route exact path="/" component={ SinglePage } />
-          <Route path="/batch" component={ BatchPage } />
+          <Route exact path="/" component={ SingleProcessPage } />
+          <Route path="/batch" component={ BatchProcessPage } />
         </div>
       </MuiThemeProvider>
     );

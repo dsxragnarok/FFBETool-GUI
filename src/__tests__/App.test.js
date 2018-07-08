@@ -4,8 +4,8 @@ import { Route } from 'react-router-dom';
 import { Tabs, Tab } from 'material-ui/Tabs';
 
 import App from '../App';
-import SinglePage from '../pages/SinglePage';
-import BatchPage from '../pages/BatchPage';
+import SingleProcessPage from '../pages/SingleProcessPage';
+import BatchProcessPage from '../pages/BatchProcessPage';
 
 jest.mock('material-ui/Tabs');
 
@@ -19,11 +19,11 @@ describe('App component', () => {
   });
 
   it('renders the <Tabs /> component', () => {
-    expect(component.find(Tabs).exists()).toBe(true);
+    expect(component.find(Tabs)).toBePresent();
   });
 
   it('renders a <Tab /> component', () => {
-    expect(component.find(Tab).exists()).toBe(true);
+    expect(component.find(Tab)).toBePresent();
   });
 
   it('renders two <Tab /> component', () => {
@@ -40,15 +40,15 @@ describe('App component', () => {
     expect(tab).toBePresent();
   });
 
-  it('renders the <Route /> to SinglePage', () => {
-    const route = component.find(Route).findWhere((route) => route.prop('component')=== SinglePage);
+  it('renders the <Route /> to SingleProcessPage', () => {
+    const route = component.find(Route).findWhere((route) => route.prop('component')=== SingleProcessPage);
 
     expect(route).toBePresent();
   });
 
 
-  it('renders the <Route /> to BatchPage', () => {
-    const route = component.find(Route).findWhere((route) => route.prop('component') === BatchPage);
+  it('renders the <Route /> to BatchProcessPage', () => {
+    const route = component.find(Route).findWhere((route) => route.prop('component') === BatchProcessPage);
 
     expect(route).toBePresent();
   });

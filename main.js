@@ -33,7 +33,7 @@ function createWindow () {
 
   // Installing React DevTools
   // Need to figure out a better way to do this.
-  BrowserWindow.addDevToolsExtension('/Users/kevin.phung/Library/Application Support/Google/Chrome/Default/Extensions/fmkadmapgofadopljbjfkapdkoienihi/2.5.2_0');
+  BrowserWindow.addDevToolsExtension('/Users/kevin.phung/Library/Application Support/Google/Chrome/Default/Extensions/fmkadmapgofadopljbjfkapdkoienihi/3.2.3_0');
 }
 
 // This method will be called when Electron has finished
