@@ -4,16 +4,28 @@ import RaisedButton from 'material-ui/RaisedButton';
 import uniq from 'lodash/uniq';
 import Image from '../../components/Image';
 
-const dropZoneStyles = {
-  width: '100%',
-  backgroundColor: '#F5F5F5',
-  border: '1px solid black',
-  margin: '0.5em 0'
-};
-
-const dropZoneBtnStyles = {
-  margin: 10
-};
+const styles = {
+  grid: {
+    display: 'grid',
+    gridTemplateColumns: '1fr minmax(400px, 2fr)',
+    gridGap: '1em'
+  },
+  animeSheetContainer: { outline: '2px solid #ccc' },
+  animeSheetContent: {
+    width: '100%',
+    height: '100%',
+    overflow: 'auto'
+  },
+  dropZone: {
+    width: '100%',
+    backgroundColor: '#F5F5F5',
+    border: '1px solid black',
+    margin: '0.5em 0'
+  },
+  button: {
+    margin: 10
+  }
+}
 
 function getIdFromFileName (filename) {
   return filename.split('_').slice(-1);
@@ -73,49 +85,45 @@ export default class SingleProcessPage extends Component {
     const { cgsPaths, anime } = this.state;
 
     return (
-      <div style={ {
-        display: 'grid',
-        gridTemplateColumns: '1fr minmax(400px, 2fr)',
-        gridGap: '1em'
-      } }>
+      <div style={ styles.grid }>
         <div style={{}}>
           <Dropzone
             name="select-anime"
             accept="image/png"
             multiple={ false }
-            style={ dropZoneStyles }
+            style={ styles.dropZone }
             onDropAccepted={ this.setAnimeFile.bind(this) }
             onDropRejected={ () =>
               this.appendError('Error: Incorrect file. Expected PNG file.')
             }
           >
             <p>Drag & Drop the anime file here</p>
-            <RaisedButton label="SELECT ANIME" style={ dropZoneBtnStyles } />
+            <RaisedButton label="SELECT ANIME" style={ styles.button } />
           </Dropzone>
           <Dropzone
             name="select-cgg"
             accept="text/csv"
             multiple={ false }
-            style={ dropZoneStyles }
+            style={ styles.dropZone }
             onDropAccepted={ this.setCggFile.bind(this) }
             onDropRejected={ () =>
               this.appendError('Error: Incorrect file. Expected a CSV file.')
             }
           >
             <p>Drag & Drop the cgg file here</p>
-            <RaisedButton label="SELECT CGG" style={ dropZoneBtnStyles } />
+            <RaisedButton label="SELECT CGG" style={ styles.button } />
           </Dropzone>
           <Dropzone
             name="select-cgs"
             accept="text/csv"
-            style={ dropZoneStyles }
+            style={ styles.dropZone }
             onDropAccepted={ this.addCgsFiles.bind(this) }
             onDropRejected={ () =>
               this.appendError('Error: Incorrect file. Expected a CSV file.')
             }
           >
             <p>Drag & Drop the cgs files here</p>
-            <RaisedButton label="SELECT CGS" style={ dropZoneBtnStyles } />
+            <RaisedButton label="SELECT CGS" style={ styles.button } />
           </Dropzone>
           <div style={{ background: '#eee' }}>
           { cgsPaths.length > 0 &&
@@ -123,8 +131,8 @@ export default class SingleProcessPage extends Component {
           }
           </div>
         </div>
-        <div style={{ outline: '2px solid #ccc' }}>
-          <div style={{ width: '100%', height: '100%', overflow: 'auto' }}>
+        <div style={ styles.animeSheetContainer }>
+          <div style={ styles.animeSheetContent }>
             <div>{ anime && <Image source={ anime.preview } /> }</div>
           </div>
         </div>
