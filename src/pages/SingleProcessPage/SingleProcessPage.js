@@ -40,7 +40,7 @@ export default class SingleProcessPage extends Component {
     anime: null,
     id: 0,
     animePath: '',
-    cggPath: '',
+    cggPath: null,
     cgsPaths: [],
     loading: false,
     error: [],
@@ -60,9 +60,10 @@ export default class SingleProcessPage extends Component {
 
   setCggFile ([file]) {
     console.log('setCggFile', file);
-    const { path: cggPath } = file;
+    const { path, name } = file;
 
-    this.setState({ cggPath });
+
+    this.setState({ cggPath: { name, path } });
   }
 
   addCgsFiles (files) {
@@ -82,7 +83,7 @@ export default class SingleProcessPage extends Component {
   }
 
   render () {
-    const { cgsPaths, anime, id } = this.state;
+    const { anime, id, cggPath, cgsPaths } = this.state;
 
     return (
       <div style={ styles.grid }>
@@ -111,6 +112,7 @@ export default class SingleProcessPage extends Component {
               this.appendError('Error: Incorrect file. Expected a CSV file.')
             }
           >
+            { cggPath && <p>{ cggPath.name }</p> }
             <p>Drag & Drop the cgg file here</p>
             <RaisedButton label="SELECT CGG" style={ styles.button } />
           </Dropzone>
