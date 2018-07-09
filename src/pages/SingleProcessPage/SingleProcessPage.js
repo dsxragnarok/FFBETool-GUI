@@ -57,7 +57,7 @@ export default class SingleProcessPage extends Component {
     console.log('setCgsFile', files);
     const paths = [
       ...this.state.cgsPaths,
-      ...files.map(({ path }) => path)
+      ...files.map(({ name, path }) => ({ name, path }))
     ];
 
     this.setState({ cgsPaths: uniq(paths) })
@@ -70,9 +70,15 @@ export default class SingleProcessPage extends Component {
   }
 
   render () {
+    const { cgsPaths, anime } = this.state;
+
     return (
-      <div style={ { display: 'flex', flexDirection: 'row' } }>
-        <div style={ { display: 'flex', flex: '1 0 auto', flexDirection: 'column', padding: 10 } }>
+      <div style={ {
+        display: 'grid',
+        gridTemplateColumns: '1fr minmax(400px, 2fr)',
+        gridGap: '1em'
+      } }>
+        <div style={{}}>
           <Dropzone
             name="select-anime"
             accept="image/png"
@@ -111,10 +117,15 @@ export default class SingleProcessPage extends Component {
             <p>Drag & Drop the cgs files here</p>
             <RaisedButton label="SELECT CGS" style={ dropZoneBtnStyles } />
           </Dropzone>
+          <div style={{ background: '#eee' }}>
+          { cgsPaths.length > 0 &&
+            cgsPaths.map(({ name }) => <li>{ name }</li>)
+          }
+          </div>
         </div>
-        <div style={{ display: 'flex', flex: '3 0 auto', outline: '2px solid #ccc', margin: 10 }}>
-          <div style={{ width: 800, height: 400, margin: 'auto', overflow: 'auto' }}>
-          { this.state.anime && <Image source={ this.state.anime.preview } /> }
+        <div style={{ outline: '2px solid #ccc' }}>
+          <div style={{ width: '100%', height: '100%', overflow: 'auto' }}>
+            <div>{ anime && <Image source={ anime.preview } /> }</div>
           </div>
         </div>
       </div>
