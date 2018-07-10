@@ -130,7 +130,7 @@ export default class SingleProcessPage extends Component {
           </Dropzone>
           <div style={{ background: '#eee' }}>
           { cgsPaths.length > 0 &&
-            cgsPaths.map(({ name }) => <li>{ name }</li>)
+            cgsPaths.map(({ name, index }) => <li key={index}>{ name }</li>)
           }
           </div>
         </div>
