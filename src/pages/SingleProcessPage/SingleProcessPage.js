@@ -30,6 +30,9 @@ const styles = {
     overflow: 'hidden',
     position: 'relative'
   },
+  outputLabel: {
+    marginRight: 10
+  },
   outputDirectoryChooser: {
     cursor: 'inherit',
     display: 'block',
@@ -151,12 +154,11 @@ export default class SingleProcessPage extends Component {
             <p>Drag & Drop the cgs files here</p>
             <RaisedButton label="SELECT CGS" style={ styles.button } />
           </Dropzone>
-          <div style={ styles.outputContainer }>
+          <label style={ styles.outputContainer }>
+            <span style={ styles.outputLabel }>Save to:</span>
             <TextField
               id="output-directory"
-              label="Output Directory"
               placeholder={ outputDirectory ? outputDirectory.path : "Choose your output directory" }
-              style={ styles.textField }
               margin="normal"
             />
             <input
@@ -165,7 +167,7 @@ export default class SingleProcessPage extends Component {
               style={ styles.outputDirectoryChooser }
               onChange={this.handleOutputDirectoryChange.bind(this)}
             />
-          </div>
+          </label>
           <div style={{ background: '#eee' }}>
           { cgsPaths.length > 0 &&
             cgsPaths.map(({ name, index }) => <li key={index}>{ name }</li>)
