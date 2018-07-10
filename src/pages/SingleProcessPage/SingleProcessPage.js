@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Dropzone from 'react-dropzone';
 import RaisedButton from 'material-ui/RaisedButton';
+import TextField from 'material-ui/TextField';
 import uniq from 'lodash/uniq';
 import Image from '../../components/Image';
 
@@ -24,6 +25,23 @@ const styles = {
   },
   button: {
     margin: 10
+  },
+  outputContainer: {
+    overflow: 'hidden',
+    position: 'relative'
+  },
+  outputDirectoryChooser: {
+    cursor: 'inherit',
+    display: 'block',
+    fontSize: '999px',
+    filter: 'alpha(opacity=0)',
+    minHeight: '100%',
+    minWidth: '100%',
+    opacity: 0,
+    position: 'absolute',
+    right: 0,
+    textAlign: 'right',
+    top: 0
   }
 }
 
@@ -42,6 +60,7 @@ export default class SingleProcessPage extends Component {
     animePath: '',
     cggPath: null,
     cgsPaths: [],
+    outputDirectory: null,
     loading: false,
     error: [],
   }
@@ -76,6 +95,10 @@ export default class SingleProcessPage extends Component {
     this.setState({ cgsPaths: uniq(paths) })
   }
 
+  handleOutputDirectoryChange (event) {
+    this.setState({ outputDirectory: event.target.files[0] })
+  }
+
   appendError (message) {
     this.setState({
       error: [...this.state.error, message]
@@ -83,7 +106,7 @@ export default class SingleProcessPage extends Component {
   }
 
   render () {
-    const { anime, id, cggPath, cgsPaths } = this.state;
+    const { anime, id, cggPath, cgsPaths, outputDirectory } = this.state;
 
     return (
       <div style={ styles.grid }>
@@ -128,6 +151,21 @@ export default class SingleProcessPage extends Component {
             <p>Drag & Drop the cgs files here</p>
             <RaisedButton label="SELECT CGS" style={ styles.button } />
           </Dropzone>
+          <div style={ styles.outputContainer }>
+            <TextField
+              id="output-directory"
+              label="Output Directory"
+              placeholder={ outputDirectory ? outputDirectory.path : "Choose your output directory" }
+              style={ styles.textField }
+              margin="normal"
+            />
+            <input
+              type="file"
+              webkitdirectory="webkitdirectory"
+              style={ styles.outputDirectoryChooser }
+              onChange={this.handleOutputDirectoryChange.bind(this)}
+            />
+          </div>
           <div style={{ background: '#eee' }}>
           { cgsPaths.length > 0 &&
             cgsPaths.map(({ name, index }) => <li key={index}>{ name }</li>)
