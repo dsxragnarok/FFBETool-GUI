@@ -170,7 +170,7 @@ export default class SingleProcessPage extends Component {
           </label>
           <div style={{ background: '#eee' }}>
           { cgsPaths.length > 0 &&
-            cgsPaths.map(({ name, index }) => <li key={index}>{ name }</li>)
+            cgsPaths.map(({ name}, index) => <li key={index}>{ name }</li>)
           }
           </div>
         </div>
