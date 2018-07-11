@@ -38,7 +38,7 @@ const styles = {
   outputLabel: {
     marginRight: 10
   },
-  outputDirectoryChooser: {
+  outputPathChooser: {
     cursor: 'inherit',
     display: 'block',
     fontSize: '999px',
@@ -80,7 +80,7 @@ export default class SingleProcessPage extends Component {
     animePath: '',
     cggPath: null,
     cgsPaths: [],
-    outputDirectory: null,
+    outputPath: null,
     loading: false,
     error: [],
   }
@@ -115,8 +115,8 @@ export default class SingleProcessPage extends Component {
     this.setState({ cgsPaths: uniq(paths) })
   }
 
-  handleOutputDirectoryChange (event) {
-    this.setState({ outputDirectory: event.target.files[0] })
+  handleoutputPathChange (event) {
+    this.setState({ outputPath: event.target.files[0] })
   }
 
   appendError (message) {
@@ -126,13 +126,20 @@ export default class SingleProcessPage extends Component {
   }
 
   invokeFFBETool () {
-    const [anim] = this.state.cgsPaths;
+    const {
+      id,
+      cgsPaths: [anim] = [],
+      animePath: inputPath,
+      outputPath: {
+        path: outputPath
+      } = {}
+    } = this.state
 
     const options = {
       ...defaultOptions,
-      id: this.state.id,
-      inputPath: this.state.animePath,
-      outputPath: this.state.outputDirectory,
+      id,
+      inputPath,
+      outputPath,
       animName: anim.name
     };
 
@@ -140,7 +147,7 @@ export default class SingleProcessPage extends Component {
   }
 
   render () {
-    const { anime, id, cggPath, cgsPaths, outputDirectory } = this.state;
+    const { anime, id, cggPath, cgsPaths, outputPath } = this.state;
 
     return (
       <div style={ styles.grid }>
@@ -189,14 +196,14 @@ export default class SingleProcessPage extends Component {
             <span style={ styles.outputLabel }>Save to:</span>
             <TextField
               id="output-directory"
-              placeholder={ outputDirectory ? outputDirectory.path : "Choose your output directory" }
+              placeholder={ outputPath ? outputPath.path : "Choose your output directory" }
               margin="normal"
             />
             <input
               type="file"
               webkitdirectory="webkitdirectory"
-              style={ styles.outputDirectoryChooser }
-              onChange={this.handleOutputDirectoryChange.bind(this)}
+              style={ styles.outputPathChooser }
+              onChange={this.handleoutputPathChange.bind(this)}
             />
           </label>
           <div style={{ background: '#eee' }}>
