@@ -5,6 +5,11 @@ import TextField from 'material-ui/TextField';
 import uniq from 'lodash/uniq';
 import Image from '../../components/Image';
 
+// We want to require electron during runtime from the nodejs environment provided at the runtime
+// rather than the nodejs environment used during compilation by webpack. By default, globals are
+// bound to window and webpack compilation ignores the window global
+const {ipcRenderer} = window.require('electron');
+
 const styles = {
   grid: {
     display: 'grid',
@@ -47,6 +52,18 @@ const styles = {
     top: 0
   }
 }
+
+const defaultOptions = {
+    id: -1,                 // {number} the unitId
+    animName: '',           // {string} animation name
+    columns: 0,             // {number} columns in sheet or strip
+    inputPath: '.',         // {string} source file(s) path
+    outputPath: '.',        // {string} output path
+    includeEmpty: true,    // {boolean} determines whether to include empty frames
+    verbose: false,         // {boolean} determines logging verbosity
+    saveJson: true,        // {boolean} determines whether to output json file
+    outputGif: true,       // {boolean} determines whether to output animated gif
+};
 
 function getIdFromFileName (filename) {
   return filename.split('_').slice(-1);
@@ -106,6 +123,20 @@ export default class SingleProcessPage extends Component {
     this.setState({
       error: [...this.state.error, message]
     });
+  }
+
+  invokeFFBETool () {
+    const [anim] = this.state.cgsPaths;
+
+    const options = {
+      ...defaultOptions,
+      id: this.state.id,
+      inputPath: this.state.animePath,
+      outputPath: this.state.outputDirectory,
+      animName: anim.name
+    };
+
+    ipcRenderer.send('invoke-ffbetool', options);
   }
 
   render () {
@@ -172,6 +203,13 @@ export default class SingleProcessPage extends Component {
           { cgsPaths.length > 0 &&
             cgsPaths.map(({ name}, index) => <li key={index}>{ name }</li>)
           }
+          </div>
+          <div>
+            <RaisedButton
+              label="Start"
+              style={ styles.button }
+              onClick={ this.invokeFFBETool.bind(this) }
+            />
           </div>
         </div>
         <div style={ styles.animeSheetContainer }>
