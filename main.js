@@ -1,6 +1,7 @@
 const {app, BrowserWindow, ipcMain} = require('electron');
 const path = require('path')
 const url = require('url')
+const ffbetool = require('ffbetool');
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -62,4 +63,5 @@ app.on('activate', () => {
 // code. You can also put them in separate files and require them here.
 ipcMain.on('invoke-ffbetool', (event, options) => {
   console.log('[invoke-ffbetool]', options);
+  ffbetool(options);
 });
