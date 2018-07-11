@@ -5,7 +5,7 @@
   "main": "main.js",
   "homepage": ".",
   "dependencies": {
-    "ffbetool": "git+ssh://git@github.com/dsxragnarok/FFBE-sprite-sheet-assembler.git#v0.3.0",
+    "ffbetool": "git+ssh://git@github.com/dsxragnarok/FFBE-sprite-sheet-assembler.git#v0.3.1",
     "history": "^4.7.2",
     "material-ui": "^0.19.4",
     "prop-types": "^15.6.0",
