@@ -129,19 +129,24 @@ export default class SingleProcessPage extends Component {
     const {
       id,
       cgsPaths: [anim] = [],
-      animePath: inputPath,
+      animePath,
       outputPath: {
         path: outputPath
       } = {}
     } = this.state
 
+    // unit_limit_atk_cgs_401001705.csv
+    const inputPath = animePath.substring(0, animePath.lastIndexOf('/'));
+    const animName = anim.name.substring('unit_'.length, anim.name.indexOf('_cgs'));
     const options = {
       ...defaultOptions,
       id,
       inputPath,
       outputPath,
-      animName: anim.name
+      animName
     };
+
+    console.log('--[invokeFFBETool]--', this.state.anime);
 
     ipcRenderer.send('invoke-ffbetool', options);
   }
