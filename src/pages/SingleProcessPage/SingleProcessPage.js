@@ -108,6 +108,11 @@ export default class SingleProcessPage extends Component {
 
   retrieveAnimationNames (id, path) {
     ipcRenderer.send('retrieve-animNames', { id, path });
+    ipcRenderer.once('acquired-animNames', (event, { animations }) => {
+      console.log('[acquired-aninNames]', animations);
+
+      this.setState({ animations });
+    });
   }
 
   handleOutputPathChange (event) {
