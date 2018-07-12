@@ -1,7 +1,11 @@
 const {app, BrowserWindow, ipcMain} = require('electron');
 const path = require('path')
 const url = require('url')
+const fs = require('fs');
+const util = require('util');
 const ffbetool = require('ffbetool');
+
+const readdir = util.promisify(fs.readdir);
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -66,6 +70,18 @@ ipcMain.on('invoke-ffbetool', (event, options) => {
   ffbetool(options);
 });
 
-ipcMain.on('retrieve-animNames', (event, { path }) => {
-  console.log('[retrieve-animNames]', path);
+ipcMain.on('retrieve-animNames', (event, { id, path }) => {
+  console.log('[retrieve-animNames]', id, path);
+
+  readdir(path)
+    .then((files) => {
+      console.log(JSON.stringify(files));
+
+      const animations = files
+        .filter((file) => file.search(/_cgs_/g) >= 0 && file.indexOf(String(id)) > 0)
+        .map((file) => file.substring(0, file.indexOf('_cgs_')));
+
+      console.log(animations);
+    })
+    .catch((error) => console.error('[readdir]', error));
 });
