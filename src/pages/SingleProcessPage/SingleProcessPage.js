@@ -78,8 +78,9 @@ export default class SingleProcessPage extends Component {
     anime: null,
     id: 0,
     animePath: '',
-    cggPath: null,
     cgsPaths: [],
+    animations: [],
+    inputPath: null,
     outputPath: null,
     loading: false,
     error: [],
@@ -97,25 +98,7 @@ export default class SingleProcessPage extends Component {
     });
   }
 
-  setCggFile ([file]) {
-    console.log('setCggFile', file);
-    const { path, name } = file;
-
-
-    this.setState({ cggPath: { name, path } });
-  }
-
-  addCgsFiles (files) {
-    console.log('setCgsFile', files);
-    const paths = [
-      ...this.state.cgsPaths,
-      ...files.map(({ name, path }) => ({ name, path }))
-    ];
-
-    this.setState({ cgsPaths: uniq(paths) })
-  }
-
-  handleoutputPathChange (event) {
+  handleOutputPathChange (event) {
     this.setState({ outputPath: event.target.files[0] })
   }
 
@@ -152,7 +135,7 @@ export default class SingleProcessPage extends Component {
   }
 
   render () {
-    const { anime, id, cggPath, cgsPaths, outputPath } = this.state;
+    const { anime, id, cgsPaths, outputPath } = this.state;
 
     return (
       <div style={ styles.grid }>
@@ -171,32 +154,6 @@ export default class SingleProcessPage extends Component {
             <p>Drag & Drop the anime file here</p>
             <RaisedButton label="SELECT ANIME" style={ styles.button } />
           </Dropzone>
-          <Dropzone
-            name="select-cgg"
-            accept="text/csv"
-            multiple={ false }
-            style={ styles.dropZone }
-            onDropAccepted={ this.setCggFile.bind(this) }
-            onDropRejected={ () =>
-              this.appendError('Error: Incorrect file. Expected a CSV file.')
-            }
-          >
-            { cggPath && <p>{ cggPath.name }</p> }
-            <p>Drag & Drop the cgg file here</p>
-            <RaisedButton label="SELECT CGG" style={ styles.button } />
-          </Dropzone>
-          <Dropzone
-            name="select-cgs"
-            accept="text/csv"
-            style={ styles.dropZone }
-            onDropAccepted={ this.addCgsFiles.bind(this) }
-            onDropRejected={ () =>
-              this.appendError('Error: Incorrect file. Expected a CSV file.')
-            }
-          >
-            <p>Drag & Drop the cgs files here</p>
-            <RaisedButton label="SELECT CGS" style={ styles.button } />
-          </Dropzone>
           <label style={ styles.outputContainer }>
             <span style={ styles.outputLabel }>Save to:</span>
             <TextField
@@ -208,7 +165,7 @@ export default class SingleProcessPage extends Component {
               type="file"
               webkitdirectory="webkitdirectory"
               style={ styles.outputPathChooser }
-              onChange={this.handleoutputPathChange.bind(this)}
+              onChange={this.handleOutputPathChange.bind(this)}
             />
           </label>
           <div style={{ background: '#eee' }}>
