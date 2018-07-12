@@ -84,6 +84,7 @@ export default class SingleProcessPage extends Component {
     animePath: '',
     cgsPaths: [],
     animations: [],
+    removedAnimations: [],
     inputPath: null,
     outputPath: null,
     loading: false,
@@ -152,7 +153,7 @@ export default class SingleProcessPage extends Component {
   }
 
   render () {
-    const { anime, id, cgsPaths, outputPath } = this.state;
+    const { anime, id, animations, outputPath } = this.state;
 
     return (
       <div style={ styles.grid }>
@@ -186,8 +187,8 @@ export default class SingleProcessPage extends Component {
             />
           </label>
           <div style={{ background: '#eee' }}>
-          { cgsPaths.length > 0 &&
-            cgsPaths.map(({ name}, index) => <li key={index}>{ name }</li>)
+          { animations.length > 0 &&
+            animations.map((name, index) => <li key={index}>{ name }</li>)
           }
           </div>
           <div>
