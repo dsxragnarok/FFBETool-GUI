@@ -77,7 +77,7 @@ ipcMain.on('retrieve-animNames', (event, { id, path }) => {
     .then((files) => {
       const animations = files
         .filter((file) => file.search(/_cgs_/g) >= 0 && file.indexOf(String(id)) > 0)
-        .map((file) => file.substring(0, file.indexOf('_cgs_')));
+        .map((file) => file.substring('unit_'.length, file.indexOf('_cgs_')));
 
       console.log(animations);
       event.sender.send('acquired-animNames', { animations });
