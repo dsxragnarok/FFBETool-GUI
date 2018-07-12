@@ -96,7 +96,7 @@ export default class SingleProcessPage extends Component {
     const id = parseInt(getIdFromFileName(name), 10);
     const inputPath = getPathFromFilePath(animePath);
 
-    this.retrieveAnimationNames(inputPath);
+    this.retrieveAnimationNames(id, inputPath);
 
     this.setState({
       id,
@@ -106,8 +106,8 @@ export default class SingleProcessPage extends Component {
     });
   }
 
-  retrieveAnimationNames (path) {
-    ipcRenderer.send('retrieve-animNames', { path });
+  retrieveAnimationNames (id, path) {
+    ipcRenderer.send('retrieve-animNames', { id, path });
   }
 
   handleOutputPathChange (event) {
