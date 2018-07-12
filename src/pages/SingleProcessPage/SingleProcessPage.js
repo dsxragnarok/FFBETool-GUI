@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import Dropzone from 'react-dropzone';
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
-import uniq from 'lodash/uniq';
+import List, { ListItem } from 'material-ui/List';
+import Toggle from 'material-ui/Toggle';
 import Image from '../../components/Image';
 
 // We want to require electron during runtime from the nodejs environment provided at the runtime
@@ -126,6 +127,45 @@ export default class SingleProcessPage extends Component {
     });
   }
 
+  addAnim (anim) {
+    const { removedAnimations } = this.state;
+    const index = removedAnimations.indexOf(anim);
+
+    console.log('[addAnim]', anim);
+    if (index < 0) {
+      return;
+    }
+
+    this.setState({
+      removedAnimations: [
+        ...removedAnimations.slice(0, index),
+        ...removedAnimations.slice(index + 1)
+      ],
+    });
+  }
+
+  removeAnim (anim) {
+    const { removedAnimations } = this.state;
+    console.log('[removeAnim]', anim);
+
+    this.setState({ removedAnimations: [...removedAnimations, anim] });
+  }
+
+  renderAnimationsList (animations, removedAnimations, addAnim, removeAnim) {
+    return animations.map((anim, index) => {
+      return <ListItem
+        key={`${index}-${anim}`}
+        rightToggle={
+          removedAnimations.includes(anim) ?
+          <Toggle toggled={false} onToggle={() => addAnim(anim)} /> :
+          <Toggle toggled={true} onToggle={() => removeAnim(anim)} />
+        }
+      >
+        {anim}
+      </ListItem>;
+    });
+  }
+
   invokeFFBETool () {
     const {
       id,
@@ -153,7 +193,7 @@ export default class SingleProcessPage extends Component {
   }
 
   render () {
-    const { anime, id, animations, outputPath } = this.state;
+    const { anime, id, animations, removedAnimations, outputPath } = this.state;
 
     return (
       <div style={ styles.grid }>
@@ -186,11 +226,9 @@ export default class SingleProcessPage extends Component {
               onChange={this.handleOutputPathChange.bind(this)}
             />
           </label>
-          <div style={{ background: '#eee' }}>
-          { animations.length > 0 &&
-            animations.map((name, index) => <li key={index}>{ name }</li>)
+          { (animations.length > 0 || removedAnimations.length > 0) &&
+            <List>{ this.renderAnimationsList(animations, removedAnimations, this.addAnim.bind(this), this.removeAnim.bind(this)) }</List>
           }
-          </div>
           <div>
             <RaisedButton
               label="Start"
