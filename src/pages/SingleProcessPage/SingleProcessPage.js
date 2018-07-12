@@ -69,6 +69,10 @@ function getIdFromFileName (filename) {
   return filename.split('_').slice(-1);
 }
 
+function getPathFromFilePath (filepath) {
+  return filepath.substring(0, filepath.lastIndexOf('/'));
+}
+
 export default class SingleProcessPage extends Component {
   static displayName = 'SingleProcessPage'
   static defaultProps = {}
@@ -86,16 +90,24 @@ export default class SingleProcessPage extends Component {
     error: [],
   }
 
-  setAnimeFile ([file]) {
-    console.log('setAnimeFile', file);
+  handleAcceptedAnimeFile ([file]) {
+    console.log('[handleAcceptedAnimeFile]', file);
     const { name, path: animePath } = file;
     const id = parseInt(getIdFromFileName(name), 10);
+    const inputPath = getPathFromFilePath(animePath);
+
+    this.retrieveAnimationNames(inputPath);
 
     this.setState({
       id,
       animePath,
-      anime: { ...file },
+      inputPath,
+      anime: { ...file }
     });
+  }
+
+  retrieveAnimationNames (path) {
+    ipcRenderer.send('retrieve-animNames', { path });
   }
 
   handleOutputPathChange (event) {
@@ -145,7 +157,7 @@ export default class SingleProcessPage extends Component {
             accept="image/png"
             multiple={ false }
             style={ styles.dropZone }
-            onDropAccepted={ this.setAnimeFile.bind(this) }
+            onDropAccepted={ this.handleAcceptedAnimeFile.bind(this) }
             onDropRejected={ () =>
               this.appendError('Error: Incorrect file. Expected PNG file.')
             }

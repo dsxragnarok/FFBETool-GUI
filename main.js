@@ -65,3 +65,7 @@ ipcMain.on('invoke-ffbetool', (event, options) => {
   console.log('[invoke-ffbetool]', options);
   ffbetool(options);
 });
+
+ipcMain.on('retrieve-animNames', (event, { path }) => {
+  console.log('[retrieve-animNames]', path);
+});
