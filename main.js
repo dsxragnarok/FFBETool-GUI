@@ -3,7 +3,7 @@ const path = require('path')
 const url = require('url')
 const fs = require('fs');
 const util = require('util');
-const ffbetool = require('ffbetool');
+const { fork } = require('child_process');
 
 const readdir = util.promisify(fs.readdir);
 
@@ -65,13 +65,11 @@ app.on('activate', () => {
 
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and require them here.
-ipcMain.on('invoke-ffbetool', (event, { animations, options }) => {
-  console.log('[invoke-ffbetool]', options, animations);
-  if (animations !== null) {
-    animations.forEach((name) => ffbetool(Object.assign({}, options, { animName: name })));
-  } else {
-    ffbetool(options);
-  }
+ipcMain.on('invoke-ffbetool', (event, message) => {
+  console.log('[invoke-ffbetool]', message);
+  const worker = fork('./ffbetool-worker.js');
+  worker.send(message);
+  worker.on('message', (message) => console.log('-- received from worker --', message));
 });
 
 ipcMain.on('retrieve-animNames', (event, { id, path }) => {
