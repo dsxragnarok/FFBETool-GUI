@@ -227,17 +227,15 @@ export default class SingleProcessPage extends Component {
               style={ styles.outputPathChooser }
               onChange={this.handleOutputPathChange.bind(this)}
             />
-          </label>
-          { (animations.length > 0 || removedAnimations.length > 0) &&
-            <List>{ this.renderAnimationsList(animations, removedAnimations, this.addAnim.bind(this), this.removeAnim.bind(this)) }</List>
-          }
-          <div>
             <RaisedButton
               label="Start"
               style={ styles.button }
               onClick={ this.invokeFFBETool.bind(this) }
             />
-          </div>
+          </label>
+          { (animations.length > 0 || removedAnimations.length > 0) &&
+            <List>{ this.renderAnimationsList(animations, removedAnimations, this.addAnim.bind(this), this.removeAnim.bind(this)) }</List>
+          }
         </div>
         <div style={ styles.animeSheetContainer }>
           <div style={ styles.animeSheetContent }>
