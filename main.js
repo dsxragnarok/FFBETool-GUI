@@ -75,11 +75,14 @@ ipcMain.on('invoke-ffbetool', (event, message) => {
 ipcMain.on('retrieve-animNames', (event, { id, path }) => {
   console.log('[retrieve-animNames]', id, path);
 
+  const isCgsFileWithId = (file, id) => file.indexOf('_cgs_') >= 0 && file.indexOf(String(id)) > 0;
+  const extractAnimNameFromPath = (file) => file.substring('unit_'.length, file.indexOf('_cgs_'));
+
   readdir(path)
     .then((files) => {
       const animations = files
-        .filter((file) => file.search(/_cgs_/g) >= 0 && file.indexOf(String(id)) > 0)
-        .map((file) => file.substring('unit_'.length, file.indexOf('_cgs_')));
+        .filter((file) => isCgsFileWithId(file, id))
+        .map((file) => extractAnimNameFromPath(file));
 
       console.log(animations);
       event.sender.send('acquired-animNames', { animations });
