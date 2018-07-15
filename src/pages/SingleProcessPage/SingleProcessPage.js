@@ -4,7 +4,7 @@ import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
 import List, { ListItem } from 'material-ui/List';
 import Toggle from 'material-ui/Toggle';
-import Image from '../../components/Image';
+import AnimeSheetPreview from './Preview';
 
 // We want to require electron during runtime from the nodejs environment provided at the runtime
 // rather than the nodejs environment used during compilation by webpack. By default, globals are
@@ -16,12 +16,6 @@ const styles = {
     display: 'grid',
     gridTemplateColumns: '1fr minmax(400px, 2fr)',
     gridGap: '1em'
-  },
-  animeSheetContainer: { outline: '2px solid #ccc' },
-  animeSheetContent: {
-    width: '100%',
-    height: '100%',
-    overflow: 'auto'
   },
   dropZone: {
     width: '100%',
@@ -237,11 +231,7 @@ export default class SingleProcessPage extends Component {
             <List>{ this.renderAnimationsList(animations, removedAnimations, this.addAnim.bind(this), this.removeAnim.bind(this)) }</List>
           }
         </div>
-        <div style={ styles.animeSheetContainer }>
-          <div style={ styles.animeSheetContent }>
-            <div>{ anime && <Image source={ anime.preview } /> }</div>
-          </div>
-        </div>
+        <AnimeSheetPreview source={ anime && anime.preview } />
       </div>
     );
   }
