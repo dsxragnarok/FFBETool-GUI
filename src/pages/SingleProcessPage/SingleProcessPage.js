@@ -34,9 +34,8 @@ const styles = {
     marginRight: 10
   },
   outputPathChooser: {
-    cursor: 'inherit',
+    cursor: 'pointer',
     display: 'block',
-    fontSize: '999px',
     filter: 'alpha(opacity=0)',
     minHeight: '100%',
     minWidth: '100%',
@@ -44,7 +43,7 @@ const styles = {
     position: 'absolute',
     right: 0,
     textAlign: 'right',
-    top: 0
+    top: 0,
   }
 }
 
@@ -189,16 +188,24 @@ export default class SingleProcessPage extends Component {
   }
 
   render () {
-    const { anime, id, animations, removedAnimations, outputPath } = this.state;
+    const { anime, id, animations, removedAnimations, inputPath, outputPath } = this.state;
 
     return (
       <div style={ styles.grid }>
-        <div style={{}}>
+        <div>
           <TextField
             floatingLabelText="Unit ID"
             floatingLabelFixed={false}
             disabled={true}
+            style={{ marginRight: 5, width: '17%' }}
             value={ id > 0 ? id : '' }
+          />
+          <TextField
+            floatingLabelText="Input Path: "
+            floatingLabelFixed={false}
+            disabled={true}
+            style={{ marginLeft: 5, width: '80%'}}
+            value={ inputPath || '' }
           />
           <Dropzone
             name="select-anime"
@@ -217,7 +224,7 @@ export default class SingleProcessPage extends Component {
             <span style={ styles.outputLabel }>Save to:</span>
             <TextField
               id="output-directory"
-              placeholder={ outputPath ? outputPath.path : "Choose your output directory" }
+              placeholder={ outputPath ? outputPath.path : "Choose your output path" }
               margin="normal"
             />
             <input
