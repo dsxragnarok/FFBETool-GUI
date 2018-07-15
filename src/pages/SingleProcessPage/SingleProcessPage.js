@@ -196,14 +196,14 @@ export default class SingleProcessPage extends Component {
           <TextField
             floatingLabelText="Unit ID"
             floatingLabelFixed={false}
-            disabled={true}
+            disabled={false}
             style={{ marginRight: 5, width: '17%' }}
             value={ id > 0 ? id : '' }
           />
           <TextField
             floatingLabelText="Input Path: "
             floatingLabelFixed={false}
-            disabled={true}
+            disabled={false}
             style={{ marginLeft: 5, width: '80%'}}
             value={ inputPath || '' }
           />
@@ -221,11 +221,12 @@ export default class SingleProcessPage extends Component {
             <RaisedButton label="SELECT ANIME" style={ styles.button } />
           </Dropzone>
           <label style={ styles.outputContainer }>
-            <span style={ styles.outputLabel }>Save to:</span>
             <TextField
               id="output-directory"
-              placeholder={ outputPath ? outputPath.path : "Choose your output path" }
+              floatingLabelText="Output Path"
+              value={ outputPath ? outputPath.path : '' }
               margin="normal"
+              style={{ width: '80%' }}
             />
             <input
               type="file"
