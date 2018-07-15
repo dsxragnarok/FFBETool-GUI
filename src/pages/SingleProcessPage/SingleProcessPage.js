@@ -194,6 +194,12 @@ export default class SingleProcessPage extends Component {
     return (
       <div style={ styles.grid }>
         <div style={{}}>
+          <TextField
+            floatingLabelText="Unit ID"
+            floatingLabelFixed={false}
+            disabled={true}
+            value={ id > 0 ? id : '' }
+          />
           <Dropzone
             name="select-anime"
             accept="image/png"
@@ -204,7 +210,6 @@ export default class SingleProcessPage extends Component {
               this.appendError('Error: Incorrect file. Expected PNG file.')
             }
           >
-            { id > 0 && <p>ID: { id }</p> }
             <p>Drag & Drop the anime file here</p>
             <RaisedButton label="SELECT ANIME" style={ styles.button } />
           </Dropzone>
