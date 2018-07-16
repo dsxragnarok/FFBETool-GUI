@@ -15,13 +15,15 @@ const styles = {
   grid: {
     display: 'grid',
     gridTemplateColumns: '1fr minmax(400px, 2fr)',
-    gridGap: '1em'
+    gridGap: '1em',
+    margin: '1em'
   },
   dropZone: {
     width: '100%',
     backgroundColor: '#F5F5F5',
     border: '1px solid black',
-    margin: '0.5em 0'
+    margin: '0.5em 0',
+    textAlign: 'center'
   },
   button: {
     margin: 10
