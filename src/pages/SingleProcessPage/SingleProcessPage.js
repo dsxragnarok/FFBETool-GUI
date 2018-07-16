@@ -2,8 +2,7 @@ import React, { Component } from 'react';
 import Dropzone from 'react-dropzone';
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
-import List, { ListItem } from 'material-ui/List';
-import Checkbox from 'material-ui/Checkbox';
+import AnimationList from './AnimationList';
 import AnimeSheetPreview from './Preview';
 
 // We want to require electron during runtime from the nodejs environment provided at the runtime
@@ -146,21 +145,6 @@ export default class SingleProcessPage extends Component {
     this.setState({ removedAnimations: [...removedAnimations, anim] });
   }
 
-  renderAnimationsList (animations, removedAnimations, addAnim, removeAnim) {
-    return animations.map((anim, index) => {
-      return <ListItem
-        key={`${index}-${anim}`}
-        leftCheckbox={
-          removedAnimations.includes(anim) ?
-          <Checkbox checked={false} onCheck={() => addAnim(anim)} /> :
-          <Checkbox checked={true} onCheck={() => removeAnim(anim)} />
-        }
-      >
-        {anim}
-      </ListItem>;
-    });
-  }
-
   invokeFFBETool () {
     const {
       id,
@@ -242,8 +226,13 @@ export default class SingleProcessPage extends Component {
               onClick={ this.invokeFFBETool.bind(this) }
             />
           </label>
-          { (animations.length > 0 || removedAnimations.length > 0) &&
-            <List>{ this.renderAnimationsList(animations, removedAnimations, this.addAnim.bind(this), this.removeAnim.bind(this)) }</List>
+          { (animations.length > 0) &&
+            <AnimationList
+              animations={ animations }
+              removedAnimations={ removedAnimations }
+              addAnim={ this.addAnim.bind(this) }
+              removeAnim={ this.removeAnim.bind(this) }
+            />
           }
         </div>
         <AnimeSheetPreview source={ anime && anime.preview } />
