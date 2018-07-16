@@ -68,6 +68,9 @@ function getPathFromFilePath (filepath) {
   return filepath.substring(0, filepath.lastIndexOf('/'));
 }
 
+const LeftPanel = ({ children }) => <div>{ children }</div>;
+LeftPanel.displayName = 'LeftPanel';
+
 export default class SingleProcessPage extends Component {
   static displayName = 'SingleProcessPage'
   static defaultProps = {}
@@ -178,7 +181,7 @@ export default class SingleProcessPage extends Component {
 
     return (
       <div style={ styles.grid }>
-        <div>
+        <LeftPanel>
           <TextField
             floatingLabelText="Unit ID"
             floatingLabelFixed={false}
@@ -234,7 +237,7 @@ export default class SingleProcessPage extends Component {
               removeAnim={ this.removeAnim.bind(this) }
             />
           }
-        </div>
+        </LeftPanel>
         <AnimeSheetPreview source={ anime && anime.preview } />
       </div>
     );
