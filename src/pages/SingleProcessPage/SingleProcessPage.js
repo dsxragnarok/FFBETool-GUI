@@ -3,7 +3,7 @@ import Dropzone from 'react-dropzone';
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
 import List, { ListItem } from 'material-ui/List';
-import Toggle from 'material-ui/Toggle';
+import Checkbox from 'material-ui/Checkbox';
 import AnimeSheetPreview from './Preview';
 
 // We want to require electron during runtime from the nodejs environment provided at the runtime
@@ -150,10 +150,10 @@ export default class SingleProcessPage extends Component {
     return animations.map((anim, index) => {
       return <ListItem
         key={`${index}-${anim}`}
-        rightToggle={
+        leftCheckbox={
           removedAnimations.includes(anim) ?
-          <Toggle toggled={false} onToggle={() => addAnim(anim)} /> :
-          <Toggle toggled={true} onToggle={() => removeAnim(anim)} />
+          <Checkbox checked={false} onCheck={() => addAnim(anim)} /> :
+          <Checkbox checked={true} onCheck={() => removeAnim(anim)} />
         }
       >
         {anim}
