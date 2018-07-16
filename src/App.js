@@ -1,12 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Route, withRouter } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import { Tabs, Tab } from 'material-ui/Tabs';
 
 import SingleProcessPage from './pages/SingleProcessPage';
-import BatchProcessPage from './pages/BatchProcessPage';
 
 import './App.css';
 
@@ -19,35 +17,11 @@ export default class App extends Component {
       push: () => null
     }
   }
-  state = {
-    tab: '/'
-  }
-
-  constructor (props) {
-    super(props);
-
-    this.handleTabChange = this.handleTabChange.bind(this);
-  }
-
-  handleTabChange (value) {
-    this.setState({ tab: value });
-    this.props.history.push(value);
-  }
 
   render() {
     return (
       <MuiThemeProvider>
-        <div className="App">
-          <Tabs
-            value={ this.state.tab }
-            onChange={ this.handleTabChange }
-          >
-            <Tab label="Single" value="/" />
-            <Tab label="Batch" value="/batch" />
-          </Tabs>
-          <Route exact path="/" component={ SingleProcessPage } />
-          <Route path="/batch" component={ BatchProcessPage } />
-        </div>
+        <SingleProcessPage />
       </MuiThemeProvider>
     );
   }
