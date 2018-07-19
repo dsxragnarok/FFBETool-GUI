@@ -90,7 +90,6 @@ export default class SingleProcessPage extends Component {
   }
 
   handleAcceptedAnimeFile ([file]) {
-    console.log('[handleAcceptedAnimeFile]', file);
     const { name, path: animePath } = file;
     const id = parseInt(getIdFromFileName(name), 10);
     const inputPath = getPathFromFilePath(animePath);
@@ -108,7 +107,6 @@ export default class SingleProcessPage extends Component {
   retrieveAnimationNames (id, path) {
     ipcRenderer.send('retrieve-animNames', { id, path });
     ipcRenderer.once('acquired-animNames', (event, { animations }) => {
-      console.log('[acquired-aninNames]', animations);
 
       this.setState({ animations });
     });
@@ -128,7 +126,6 @@ export default class SingleProcessPage extends Component {
     const { removedAnimations } = this.state;
     const index = removedAnimations.indexOf(anim);
 
-    console.log('[addAnim]', anim);
     if (index < 0) {
       return;
     }
@@ -143,7 +140,6 @@ export default class SingleProcessPage extends Component {
 
   removeAnim (anim) {
     const { removedAnimations } = this.state;
-    console.log('[removeAnim]', anim);
 
     this.setState({ removedAnimations: [...removedAnimations, anim] });
   }
@@ -171,7 +167,6 @@ export default class SingleProcessPage extends Component {
       animations: removedAnimations.length === 0 ? null : animations.filter((name) => !removedAnimations.includes(name))
     }
 
-    console.log('--[invokeFFBETool]--', this.state.anime);
 
     ipcRenderer.send('invoke-ffbetool', message);
   }
